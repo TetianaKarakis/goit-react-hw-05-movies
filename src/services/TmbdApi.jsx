@@ -10,6 +10,7 @@ export const fetchTrending = async () => {
 };
 
 export const fetchSearchByKeyword = async keyword => {
+  console.log(keyword);
   const response = await axios.get(
     `search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${keyword}`
   );

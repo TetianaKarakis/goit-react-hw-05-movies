@@ -12,6 +12,7 @@ const Form = ({ searchMovies }) => {
   const handleSubmit = event => {
     event.preventDefault();
     searchMovies(query.toLowerCase());
+    setQuery("");
   };
 
   return (
@@ -23,7 +24,9 @@ const Form = ({ searchMovies }) => {
         value={query}
         onChange={handleInputChange}
       />
+       
       <Button type="submit">Search</Button>
+      
     </SearchForm>
   );
 };

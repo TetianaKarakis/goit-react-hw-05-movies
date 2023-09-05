@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
+import { useParams, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { fetchMovieDetails } from 'services/TmbdApi';
 import Loader from 'components/Loader/Loader';
 import {
@@ -15,7 +15,11 @@ const MovieDetails = () => {
   const [movieInfo, setMovieInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
+  const handleClick = () => {
+    navigate(location?.state?.from ?? '/');
+  };
   useEffect(() => {
     const fetchMovieDetailsFilms = () => {
       setLoading(true);
@@ -51,10 +55,8 @@ const MovieDetails = () => {
 
   return (
     <>
-     
-      <Link to={location.state?.from ?? '/movies'}>
-        <Button type="button">Go back</Button>
-      </Link>
+      <Button onClick={handleClick}>Go back</Button>
+
       {loading && <Loader />}
 
       {movieInfo && (
@@ -89,10 +91,14 @@ const MovieDetails = () => {
         <h3>Additional information</h3>
         <ListInfo>
           <li>
-            <LinkInfo to="cast">Cast</LinkInfo>
+            <LinkInfo to="cast" state={location.state}>
+              Cast
+            </LinkInfo>
           </li>
           <li>
-            <LinkInfo to="reviews">Reviews</LinkInfo>
+            <LinkInfo to="reviews" state={location.state}>
+              Reviews
+            </LinkInfo>
           </li>
         </ListInfo>
         <hr />
